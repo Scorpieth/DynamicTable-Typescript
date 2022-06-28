@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import DynamicTable from './dynamicTable/dynamicTable.tsx';
+import { getTableData } from './dynamicTableTestData/dynamicTableTestData.ts';
 
 function App() {
   return (
@@ -9,14 +11,10 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+			Dynamic table with size of 10
+          	<DynamicTable tableData={getTableData(10)} />
+			Dynamicc table with size of 15
+			<DynamicTable tableData={getTableData(15)} />
       </header>
     </div>
   );
