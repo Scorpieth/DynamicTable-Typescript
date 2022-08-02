@@ -7,4 +7,4 @@ Features:
 
 
 Known issues and workarounds:
-- Can't render values that are objects, it currently completely ignores
+- Can't render values that are objects, it currently completely ignores both header and value of object type values
