@@ -12,7 +12,7 @@ const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) :JSX.
 
     /* Returns all non-excluded keys, using Object.entries since its easier to use than Object.keys in typescript*/
     /* Does not render headers of object values*/
-    const columnKeys = tableData.map(data => Object.entries(data).filter(([key, value]) => !excludeKeys.includes(key) && typeof value !== 'object'))[0];
+    const columnKeys = tableData?.map(data => Object.entries(data).filter(([key, value]) => !excludeKeys.includes(key) && typeof value !== 'object'))[0];
     /* Renders the table head for the table, you can add a translation key as an input in the table Props and then add it in the rendering of the table head to have translated variable names */
      const renderTableHead = () => {
          return <tr>
@@ -23,10 +23,10 @@ const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) :JSX.
      }
     
     const renderTableRows = () => {
-        return tableData.map((data: any) => {
+        return tableData?.map((data: any) => {
             return (
                 <tr key={data}>
-                {columnKeys.map(([key, value]) => {
+                {columnKeys?.map(([key, value]) => {
                    return renderDataCell(data[key], key); /* Renders all the non-excluded variables */
                 })}
             </tr>
