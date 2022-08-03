@@ -8,16 +8,16 @@ interface IDynamicTableProps {
 }
 
 
-const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) :JSX.Element => { /* Return type of JSX.Element, doesn't need to be defined */
-
+const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) => {
     /* Returns all non-excluded keys, using Object.entries since its easier to use than Object.keys in typescript*/
     /* Does not render headers of object values*/
-    const columnKeys = tableData?.map(data => Object.entries(data).filter(([key, value]) => !excludeKeys.includes(key) && typeof value !== 'object'))[0];
+    const columnKeys = tableData?.map(data => Object.entries(data).filter(([key, value]) => !excludeKeys.includes(key) && (value instanceof Date || typeof value !== 'object')))[0];
     /* Renders the table head for the table, you can add a translation key as an input in the table Props and then add it in the rendering of the table head to have translated variable names */
-     const renderTableHead = () => {
+    console.log(columnKeys);
+    const renderTableHead = () => {
          return <tr>
-             {columnKeys.map(([key]) => {
-                 return <th key={key}>{key}</th> /* Renders non-excluded keys , these are only the variable names, you can add translation ex. {t(i8nKey:entry[0])} */
+             {columnKeys.map(([key, value], i) => {
+                 return <th key={i}>{key}</th> /* Renders non-excluded keys , these are only the variable names, you can add translation ex. {t(i8nKey:entry[0])} */
              })}
          </tr>
      }
@@ -25,7 +25,7 @@ const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) :JSX.
     const renderTableRows = () => {
         return tableData?.map((data: any) => {
             return (
-                <tr key={data}>
+                <tr>
                 {columnKeys?.map(([key, value]) => {
                    return renderDataCell(data[key], key); /* Renders all the non-excluded variables */
                 })}
@@ -39,7 +39,6 @@ const DynamicTable = ({tableData, excludeKeys = [] } : IDynamicTableProps) :JSX.
         
         /* Parse Typescript Date Object to be rendered, can be extended to format the date properly with a input props date formatter*/
         if(value instanceof Date){
-            console.log(' its a date ')
             return <td>{value.toString()}</td>
         }
         
